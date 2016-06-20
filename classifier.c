@@ -1,15 +1,15 @@
 /*
-¿ìËÙÅäÖÃ²½Öè£º
-1¡¢ºê¶¨ÒåÐÞ¸Ä
-//·ÂÕæ×éÍøÐéÄâ²ÎÁ¿ÅäÖÃ
-#define PHYSICALPORT "eth0"	ÐéÄâÎïÀíÍø¿ÚºÅ¡ª¡ª¸ù¾Ý×é×°Éè±¸µÄÐèÒªÐÞ¸ÄÎªÇ¡µ±µÄÐéÄâÍø¿ÚºÅ£¬ÒªÇó¸ÃÍø¿ÚËùÔÚµÄÍøÂçÉè±¸ÖÐ£¬´ËÍø¿ÚºÅÎ¨Ò»
-2¡¢ÏµÍ³ÉèÖÃ
-ÔÚFedoraÏµÍ³ÖÐÒòÐèÒªÊ¹ÓÃÔ­Ê¼Ì×½Ó×Ö·¢ËÍ×Ô¶¨Òå¸ñÊ½µÄÊý¾Ý°ü£¬Ðë¹Ø±ÕFedoraµÄ·À»ðÇ½£¬ÃüÁî£º
+å¿«é€Ÿé…ç½®æ­¥éª¤ï¼š
+1ã€å®å®šä¹‰ä¿®æ”¹
+//ä»¿çœŸç»„ç½‘è™šæ‹Ÿå‚é‡é…ç½®
+#define PHYSICALPORT "eth0"	è™šæ‹Ÿç‰©ç†ç½‘å£å·â€”â€”æ ¹æ®ç»„è£…è®¾å¤‡çš„éœ€è¦ä¿®æ”¹ä¸ºæ°å½“çš„è™šæ‹Ÿç½‘å£å·ï¼Œè¦æ±‚è¯¥ç½‘å£æ‰€åœ¨çš„ç½‘ç»œè®¾å¤‡ä¸­ï¼Œæ­¤ç½‘å£å·å”¯ä¸€
+2ã€ç³»ç»Ÿè®¾ç½®
+åœ¨Fedoraç³»ç»Ÿä¸­å› éœ€è¦ä½¿ç”¨åŽŸå§‹å¥—æŽ¥å­—å‘é€è‡ªå®šä¹‰æ ¼å¼çš„æ•°æ®åŒ…ï¼Œé¡»å…³é—­Fedoraçš„é˜²ç«å¢™ï¼Œå‘½ä»¤ï¼š
 sudo systemctl stop firewalld.service
-ÔÚUbuntuÏµÍ³ÖÐÎÞÐèÈÎºÎ²Ù×÷
-3¡¢±àÒëÃüÁî
+åœ¨Ubuntuç³»ç»Ÿä¸­æ— éœ€ä»»ä½•æ“ä½œ
+3ã€ç¼–è¯‘å‘½ä»¤
 gcc physicalport_recv.c -o physicalport_recv
-4¡¢ÔËÐÐ£¨ÒòÉæ¼°Ô­Ê¼Ì×½Ó×ÖµÄÊ¹ÓÃ£¬ÐërootÈ¨ÏÞ£©
+4ã€è¿è¡Œï¼ˆå› æ¶‰åŠåŽŸå§‹å¥—æŽ¥å­—çš„ä½¿ç”¨ï¼Œé¡»rootæƒé™ï¼‰
 sudo ./physicalport_recv
 */
 
@@ -50,22 +50,24 @@ sudo ./physicalport_recv
 #include <config.h>
 #endif
 
-/*******************************************************************************************************************************************
-*************************************ºê¶¨ÒåÅäÖÃÊý¾Ý************È«¾Ö±äÁ¿¶¨Òå************°ü¸ñÊ½ÉùÃ÷*********************************************
-*******************************************************************************************************************************************/
-//Íø¿¨¶Ë¿Ú£¨ÓÃÓÚºê¶¨ÒåÊäÈë£©
+/******************************************
+*å®å®šä¹‰é…ç½®æ•°æ®				   	
+*å…¨å±€å˜é‡å®šä¹‰				   
+*åŒ…æ ¼å¼å£°æ˜Ž				  
+*******************************************/
+//ç½‘å¡ç«¯å£ï¼ˆç”¨äºŽå®å®šä¹‰è¾“å…¥ï¼‰
 #define PHYSICALPORT       "eth3"
 #define PHYSICALPORTlength 5
 #define SENDPORT 6666
 #define ControllerIP "127.0.0.1"
 
-//Íø¿¨¶Ë¿Ú£¨Êµ¼Ê³ÌÐòÖÐÊ¹ÓÃ²¢Ê¶±ðµÄÔØÌå£©
+//ç½‘å¡ç«¯å£ï¼ˆå®žé™…ç¨‹åºä¸­ä½¿ç”¨å¹¶è¯†åˆ«çš„è½½ä½“ï¼‰
 char PhysicalPort[6];
 
-//·¢ËÍ»º³åÇø´óÐ¡
+//å‘é€ç¼“å†²åŒºå¤§å°
 #define BUFFSIZE     1024 * 5
 
-//½ÓÊÕ»º³åÇø
+//æŽ¥æ”¶ç¼“å†²åŒº
 static int RecvBUFFSIZE = BUFFSIZE;
 static char RecvBuf[BUFFSIZE] = {0};
 
@@ -78,17 +80,17 @@ struct  metadata{
 
 void CFrequstsend(struct metadata meta);
 /*****************************************
-* º¯ÊýÃû³Æ£ºEthernet_SetPromisc
-* ¹¦ÄÜÃèÊö£ºÎïÀíÍø¿¨»ìÔÓÄ£Ê½ÊôÐÔ²Ù×÷
-* ²ÎÊýÁÐ±í£ºconst char *pcIfName, int fd, int iFlags
-* ·µ»Ø½á¹û£ºstatic int
+* å‡½æ•°åç§°ï¼šEthernet_SetPromisc
+* åŠŸèƒ½æè¿°ï¼šç‰©ç†ç½‘å¡æ··æ‚æ¨¡å¼å±žæ€§æ“ä½œ
+* å‚æ•°åˆ—è¡¨ï¼šconst char *pcIfName, int fd, int iFlags
+* è¿”å›žç»“æžœï¼šstatic int
 *****************************************/
 static int Ethernet_SetPromisc(const char *pcIfName,int fd,int iFlags)
 {
 	int iRet = -1;
 	struct ifreq stIfr;
 	
-	//»ñÈ¡½Ó¿ÚÊôÐÔ±êÖ¾Î»
+	//èŽ·å–æŽ¥å£å±žæ€§æ ‡å¿—ä½
 	strcpy(stIfr.ifr_name,pcIfName);
 	iRet = ioctl(fd,SIOCGIFFLAGS,&stIfr);
 	if(0 > iRet)
@@ -99,16 +101,16 @@ static int Ethernet_SetPromisc(const char *pcIfName,int fd,int iFlags)
 	
 	if(0 == iFlags)
 	{
-		//È¡Ïû»ìÔÓÄ£Ê½
+		//å–æ¶ˆæ··æ‚æ¨¡å¼
 		stIfr.ifr_flags &= ~IFF_PROMISC;
 	}
 	else
 	{
-		//ÉèÖÃÎª»ìÔÓÄ£Ê½
+		//è®¾ç½®ä¸ºæ··æ‚æ¨¡å¼
 		stIfr.ifr_flags |= IFF_PROMISC;
 	}
 	
-	//ÉèÖÃ½Ó¿Ú±êÖ¾
+	//è®¾ç½®æŽ¥å£æ ‡å¿—
 	iRet = ioctl(fd,SIOCSIFFLAGS,&stIfr);
 	if(0 > iRet)
 	{
@@ -120,10 +122,10 @@ static int Ethernet_SetPromisc(const char *pcIfName,int fd,int iFlags)
 }
 
 /*****************************************
-* º¯ÊýÃû³Æ£ºEthernet_InitSocket
-* ¹¦ÄÜÃèÊö£º´´½¨Ô­Ê¼Ì×½Ó×Ö
-* ²ÎÊýÁÐ±í£º
-* ·µ»Ø½á¹û£ºstatic int
+* å‡½æ•°åç§°ï¼šEthernet_InitSocket
+* åŠŸèƒ½æè¿°ï¼šåˆ›å»ºåŽŸå§‹å¥—æŽ¥å­—
+* å‚æ•°åˆ—è¡¨ï¼š
+* è¿”å›žç»“æžœï¼šstatic int
 *****************************************/
 static int Ethernet_InitSocket()
 {
@@ -132,21 +134,21 @@ static int Ethernet_InitSocket()
 	struct ifreq stIf;
 	struct sockaddr_ll stLocal = {0};
 	
-	//´´½¨SOCKET
+	//åˆ›å»ºSOCKET
 	fd = socket(PF_PACKET,SOCK_RAW,htons(ETH_P_ALL));
 	//fd = socket(AF_INET,SOCK_RAW,IPPROTO_UDP);
 	
-	//Íø¿¨»ìÔÓÄ£Ê½ÉèÖÃ
+	//ç½‘å¡æ··æ‚æ¨¡å¼è®¾ç½®
 	Ethernet_SetPromisc(PhysicalPort,fd,1);
 	
-	//ÉèÖÃSOCKETÑ¡Ïî
+	//è®¾ç½®SOCKETé€‰é¡¹
 	iRet = setsockopt(fd,SOL_SOCKET,SO_RCVBUF,&RecvBUFFSIZE,sizeof(int));
 	
-	//»ñÈ¡ÎïÀíÍø¿¨½Ó¿ÚË÷Òý
+	//èŽ·å–ç‰©ç†ç½‘å¡æŽ¥å£ç´¢å¼•
 	strcpy(stIf.ifr_name,PhysicalPort);
 	iRet = ioctl(fd,SIOCGIFINDEX,&stIf);
 	
-	//°ó¶¨ÎïÀíÍø¿¨
+	//ç»‘å®šç‰©ç†ç½‘å¡
 	stLocal.sll_family = PF_PACKET;
 	stLocal.sll_ifindex = stIf.ifr_ifindex;
 	stLocal.sll_protocol = htons(ETH_P_ALL);
@@ -155,10 +157,10 @@ static int Ethernet_InitSocket()
 }
 
 /*****************************************
-* º¯ÊýÃû³Æ£ºEthernet_StartCapture
-* ¹¦ÄÜÃèÊö£º²¶»ñÍø¿¨Êý¾ÝÖ¡
-* ²ÎÊýÁÐ±í£ºconst int fd
-* ·µ»Ø½á¹û£ºvoid
+* å‡½æ•°åç§°ï¼šEthernet_StartCapture
+* åŠŸèƒ½æè¿°ï¼šæ•èŽ·ç½‘å¡æ•°æ®å¸§
+* å‚æ•°åˆ—è¡¨ï¼šconst int fd
+* è¿”å›žç»“æžœï¼švoid
 *****************************************/
 static void Ethernet_StartCapture(const int fd){
 	struct metadata meta;
@@ -301,10 +303,10 @@ static void Ethernet_StartCapture(const int fd){
 }
 
 /*****************************************
-* º¯ÊýÃû³Æ£ºCFrequstsend
-* ¹¦ÄÜÃèÊö£ºCF send message to NSHcontroller
-* ²ÎÊýÁÐ±í£ºconst int fd
-* ·µ»Ø½á¹û£ºvoid
+* å‡½æ•°åç§°ï¼šCFrequstsend
+* åŠŸèƒ½æè¿°ï¼šCF send message to NSHcontroller
+* å‚æ•°åˆ—è¡¨ï¼šconst int fd
+* è¿”å›žç»“æžœï¼švoid
 *****************************************/
 void CFrequstsend(struct metadata meta){
         int socket_send;
@@ -319,25 +321,25 @@ void CFrequstsend(struct metadata meta){
 }
 
 /*****************************************
-* º¯ÊýÃû³Æ£ºmain
-* ¹¦ÄÜÃèÊö£ºÖ÷º¯Êý
-* ²ÎÊýÁÐ±í£º
-* ·µ»Ø½á¹û£º
+* å‡½æ•°åç§°ï¼šmain
+* åŠŸèƒ½æè¿°ï¼šä¸»å‡½æ•°
+* å‚æ•°åˆ—è¡¨ï¼š
+* è¿”å›žç»“æžœï¼š
 *****************************************/
 void main()
 {
 	memcpy(PhysicalPort,PHYSICALPORT,PHYSICALPORTlength);
 
-	//³õÊ¼»¯SOCKET
+	//åˆå§‹åŒ–SOCKET
 	int fd   = -1;
 	fd = Ethernet_InitSocket();
 	if(0 > fd)
 	{
 		exit(0);
 	}
-	//²¶»ñÊý¾Ý°ü£¨ËÀÑ­»·£©
+	//æ•èŽ·æ•°æ®åŒ…ï¼ˆæ­»å¾ªçŽ¯ï¼‰
 	Ethernet_StartCapture(fd);
 	
-	//¹Ø±ÕSOCKET
+	//å…³é—­SOCKET
 	close(fd);
 }
